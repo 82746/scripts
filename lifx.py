@@ -13,6 +13,9 @@ def toggle_power(bulb):
 
 def main():
     lifx = lifxlan.LifxLAN(1)
+    if len(lifx.get_lights()) < 1:
+        print("no light bulbs found in lan.")
+        exit(1)
 
     bulb = lifx.get_lights()[0]
     print("name:",bulb.get_label(),"\nip:",bulb.get_ip_addr())
