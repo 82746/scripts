@@ -25,7 +25,7 @@ confirm() {
 		exit 0
 	fi
 }
-
+# use a nerdfonts patched font for correct symbols
 opt1="襤 Shut down"
 opt2="累 Reboot"
 opt3="鈴 Suspend"
