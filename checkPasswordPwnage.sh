@@ -26,19 +26,35 @@ check_password() {
 	local response=$(curl -s https://api.pwnedpasswords.com/range/$hashPrefix)
 	local occurences=0
 	
+
+	# hash comparison loop
 	IFS=$'\n'
-	for line in $response
-	do
-		local respHash=$(echo $line | cut -d":" -f1)
-		if [[ "$quiet" == "0" ]]; then
-			printf "$hashSuffix\n$respHash\n\n"
-		fi
-	
-		if [[ $respHash == $hashSuffix ]]; then
-			local occurences=$(printf $line | sed -nr 's/.*\:([0-9]+).*/\1/p')
-			break
-		fi
-	done
+	if [[ "$quiet" == "1" ]]; then
+		for line in $response
+		do
+			local respHash=$(echo $line | cut -d":" -f1)
+		
+			if [[ $respHash == $hashSuffix ]]; then
+				local occurences=$(printf $line | sed -nr 's/.*\:([0-9]+).*/\1/p')
+				break
+			fi
+		done
+	else
+		clear
+		sleep 0.1
+		for line in $response
+		do
+			local respHash=$(echo $line | cut -d":" -f1)
+			clear
+			printf "$hashSuffix\n$respHash\n"
+		
+			if [[ $respHash == $hashSuffix ]]; then
+				local occurences=$(printf $line | sed -nr 's/.*\:([0-9]+).*/\1/p')
+				break
+			fi
+		done
+	fi
+
 	
 	if [[ "$numonly" == "1" ]]; then
 		printf "$occurences\n"
@@ -46,6 +62,7 @@ check_password() {
 	fi
 
 	if [[ $occurences -eq 0 ]]; then
+		clear
 		printf "Good\nPassword not found in any leaks\n"
 	else
 		printf "Warning\nPassword found in $occurences leaks.\n"
