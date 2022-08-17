@@ -11,14 +11,12 @@ check_password() {
 	IFS=$'-'
 	for i in "${options[@]}"
 	do
-		echo opt:$i
 		if [[ "$i" =~ q$ ]] || [[ "$i" =~ quiet$ ]]; then
 			quiet=1
 		elif [[ "$i" =~ n$ ]] || [[ "$i" =~ numonly$ ]]; then
 			numonly=1
 		fi
 	done
-	echo $quiet $numonly
 
 	# do the password checking
 	local passwHash=$(printf "$passw" | sha1sum | sed -nr 's/([a-z0-9]*).*/\1/p' | tr 'a-z' 'A-Z')
