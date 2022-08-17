@@ -3,7 +3,7 @@
 check_password() {
 	local passwHash=$(printf $1 | sha1sum | sed -nr 's/([a-z0-9]*).*/\1/p' | tr 'a-z' 'A-Z')
 	local hashPrefix=$(echo $passwHash | sed -nr 's/^(.{5}).*/\1/p') # first 5 chars of hash to be sent to the api
-	local hashSuffix=$(echo $passwHash | sed -nr 's/^.{5}(.*)/\1/p') # first 5 chars of hash to be sent to the api
+	local hashSuffix=$(echo $passwHash | sed -nr 's/^.{5}(.*)/\1/p') # remaining 5 chars of hash
 
 	local response=$(curl -s https://api.pwnedpasswords.com/range/$hashPrefix)
 	local occurences=0
