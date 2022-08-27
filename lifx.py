@@ -52,7 +52,7 @@ def main():
                 print("usage: \npower [toggle/on/off]")
         
         elif i == "-b":
-            normalized_brightness = int(options[i])*65535/100
+            normalized_brightness = int(options[i][0])*65535/100
             bulb.set_brightness(normalized_brightness)
 
         elif i == "-hsl":
