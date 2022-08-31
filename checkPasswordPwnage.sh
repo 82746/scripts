@@ -70,7 +70,7 @@ check_password() {
 	printf "Source: haveibeenpwned.com\n"
 }
 
-helpmessage='usage: pwnage [options] <password>\n\t-q, --quiet\n\t\tprint only result message\n\t-n, --numonly\n\t\t print only number of pwnages\n'
+helpmessage="usage: pwnage [options] <password>\n\t-q, --quiet\n\t\tdon\'t print hash comparisons\n\t-n, --numonly\n\t\tdon\'t print the result message\n"
 
 # gather all valid options and find password argument
 for i in $@
